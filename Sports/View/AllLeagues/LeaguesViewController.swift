@@ -13,7 +13,7 @@ class LeaguesViewController: UIViewController, UITableViewDelegate, UITableViewD
     var presenter : LeaugesPresenter?
     var leagues : [Leagues]?
 
-
+    var sport : String?
     @IBOutlet weak var leaguesTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,7 @@ class LeaguesViewController: UIViewController, UITableViewDelegate, UITableViewD
         let nib = UINib(nibName: "LeaguesViewCell", bundle: nil)
         leaguesTable.register(nib, forCellReuseIdentifier: "cellofLeagues")
         presenter = LeaugesPresenter(LVC: self)
+        presenter?.sport = self.sport ?? ""
         presenter?.getData()
 
     }
@@ -50,8 +51,11 @@ class LeaguesViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
 
         if let imageUrl = presenter?.imageUrl(for: indexPath.row) {
-            cell.logoOfLeague.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "Europa_League"))
+            cell.logoOfLeague.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
+        }else{
+            cell.logoOfLeague.image = UIImage(named: "placeholder")
         }
+        
 
         return cell
         }
@@ -63,7 +67,7 @@ class LeaguesViewController: UIViewController, UITableViewDelegate, UITableViewD
 
 //        let league = leagues?[indexPath.row]
         print("go to Details")
-        let detalisLVC = storyboard?.instantiateViewController(withIdentifier: "DetailsLeaguesViewController") as! DetailsLeaguesViewController
+        let detalisLVC = DetailsLeaguesViewController(nibName: "DetailsLeaguesViewController", bundle: nil)
         navigationController?.pushViewController(detalisLVC, animated: true)
 
     }

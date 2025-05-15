@@ -19,9 +19,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else {
             return
         }
+        
         window = UIWindow(windowScene: scene)
-        let rootViewController = LeaguesViewController()
-        window?.rootViewController = UINavigationController(rootViewController: rootViewController)
+        let sportsVC = SportsViewController(nibName: "SportsViewController", bundle: nil)
+        sportsVC.tabBarItem = UITabBarItem(title: "Sports", image: UIImage(systemName: "sportscourt"), tag: 0)
+        
+        let tabBarController = UITabBarController()
+            tabBarController.viewControllers = [sportsVC]
+        let floraColor = UIColor(red: 0.0, green: 1.0, blue: 0.5, alpha: 1.0)
+        tabBarController.tabBar.tintColor = floraColor
+       
+        window?.rootViewController = UINavigationController(rootViewController: tabBarController)
 
         window?.makeKeyAndVisible()
 
