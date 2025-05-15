@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct LeaugesResponse:Codable{
+struct LeaguesResponse:Codable{
 
     let success :Int
-    let result :[Leauges]
+    let result :[Leagues]
 
 }

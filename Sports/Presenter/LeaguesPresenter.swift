@@ -9,37 +9,31 @@ import Foundation
 
 class LeaugesPresenter{
 
-    var LVC :LeaugesViewController
-    var leagues : [Leauges] = []
+    var LVC :LeaguesViewController
+    var leagues : [Leagues] = []
 
-    init(tableLeauges:TableProductsViewController){
-        self.TableProducts = tableProducts
+    init(LVC:LeaguesViewController){
+        self.LVC = LVC
+    }
+
+
+    func getData(){
+
+        Network.fetchDataFromJSON { [weak self] response in
+                    self?.leagues = response?.result ?? []
+
+                    DispatchQueue.main.async {
+                        self?.LVC.leagues = self?.leagues ?? []
+                      self?.LVC.leaguesTable.reloadData()
+                    }
+        }
+    }
+
+    func imageUrl(for index: Int) -> URL? {
+        guard let logoString = leagues[index].league_logo else { return nil }
+        return URL(string: logoString)
     }
 
 }
 
 
-
-/*
-
- var TableProducts :TableProductsViewController
- var products : [Products] = []
- init(tableProducts:TableProductsViewController){
-     self.TableProducts = tableProducts
- }
-
-
- func getData(){
-
-     Network.fetchDataFromJSON {[weak self] response in
-         self?.products = response?.products ?? []
-         DispatchQueue.main.async {
-             self?.TableProducts.products  =  self?.products
-             self?.TableProducts.tableView.reloadData()
-         }
-
-
-     }
- }
-
- */
