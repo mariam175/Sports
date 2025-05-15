@@ -11,6 +11,7 @@ class LeaugesPresenter{
 
     var LVC :LeaguesViewController
     var leagues : [Leagues] = []
+    var sport : String?
 
     init(LVC:LeaguesViewController){
         self.LVC = LVC
@@ -19,7 +20,7 @@ class LeaugesPresenter{
 
     func getData(){
 
-        Network.fetchDataFromJSON { [weak self] response in
+        Network.fetchDataFromJSON(sport:sport) { [weak self] response in
                     self?.leagues = response?.result ?? []
 
                     DispatchQueue.main.async {

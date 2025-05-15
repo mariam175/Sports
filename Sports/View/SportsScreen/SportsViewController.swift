@@ -47,6 +47,16 @@ class SportsViewController: UIViewController ,UICollectionViewDataSource , UICol
         return cell
         
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let leaguesVC = LeaguesViewController(nibName: "LeaguesViewController", bundle: nil)
+        guard let sport = sports[indexPath.row]["image"] else{
+            return
+        }
+        leaguesVC.sport = sport
+        self.navigationController?.pushViewController(leaguesVC, animated: true)
+        
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (sportsCV.bounds.width - 30) / 2, height: (sportsCV.bounds.height - 30) / 2)
     }

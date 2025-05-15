@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 protocol NetworkProtocol{
-    static func fetchDataFromJSON(complitionHandler: @escaping (LeaguesResponse?) -> Void)
+    static func fetchDataFromJSON(sport : String? ,complitionHandler: @escaping (LeaguesResponse?) -> Void)
 }
 
 
@@ -17,9 +17,12 @@ class Network:NetworkProtocol{
 
 
     
-    static func fetchDataFromJSON(complitionHandler: @escaping (LeaguesResponse?) -> Void) {
+    static func fetchDataFromJSON(sport : String? , complitionHandler: @escaping (LeaguesResponse?) -> Void) {
 
-        let url = "https://apiv2.allsportsapi.com/football/?met=Leagues&APIkey=\(Config.apiKey)"
+        guard let sportType = sport else {
+            return
+        }
+        let url = "https://apiv2.allsportsapi.com/\(sportType)/?met=Leagues&APIkey=\(Config.apiKey)"
 
         AF.request(url).responseDecodable(of: LeaguesResponse.self) { response in
              switch response.result {
