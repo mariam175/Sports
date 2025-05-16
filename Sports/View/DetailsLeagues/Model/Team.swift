@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct Team{
+    var teamKey : Int
+    var teamLogo : String
+}

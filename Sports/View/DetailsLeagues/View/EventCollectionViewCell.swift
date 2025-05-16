@@ -9,11 +9,14 @@ import UIKit
 
 class EventCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var eventTime: UILabel!
     @IBOutlet weak var homeImage: UIImageView!
     @IBOutlet weak var homeName: UILabel!
     @IBOutlet weak var awayImage: UIImageView!
     
     @IBOutlet weak var awayName: UILabel!
+    
+    @IBOutlet weak var eventDate: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

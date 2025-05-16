@@ -22,6 +22,7 @@ class SportsViewController: UIViewController ,UICollectionViewDataSource , UICol
         super.viewDidLoad()
         sportsCV.dataSource = self
         sportsCV.delegate = self
+        self.title = "Sports"
         
         let cellNib = UINib(nibName: "SportCollectionViewCell", bundle: nil)
         sportsCV.register(cellNib, forCellWithReuseIdentifier: "sportCell")
