@@ -16,8 +16,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="435" height="62"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ow-N1-kws">
-                        <rect key="frame" x="128" y="7" width="297" height="48"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ow-N1-kws">
+                        <rect key="frame" x="128" y="10" width="216" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                         <nil key="textColor"/>
@@ -34,7 +34,7 @@
                 <outlet property="logoOfLeague" destination="aqE-Df-IiD" id="bqI-KT-UNw"/>
                 <outlet property="nameOfLeague" destination="0ow-N1-kws" id="GDb-ew-guA"/>
             </connections>
-            <point key="canvasLocation" x="211.4503816793893" y="-4.9295774647887329"/>
+            <point key="canvasLocation" x="210.74074074074073" y="-5"/>
         </tableViewCell>
     </objects>
 </document>
