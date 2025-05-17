@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct TeamResponse:Codable{
+
+    let success :Int
+    let result :[TeamDetails]
+}

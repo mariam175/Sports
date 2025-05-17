@@ -111,4 +111,29 @@ class Network:NetworkProtocol{
          }
     }
 
+    static func getTeamDetails(teamId: Int, sport : String? ,complitionHandler: @escaping (TeamResponse?) -> Void){
+        guard let sportType = sport else {
+            return
+        }
+
+        let url = "https://apiv2.allsportsapi.com/\(sportType)/?met=Teams&teamId=\(teamId)&APIkey=\(Config.apiKey)"
+
+
+        AF.request(url).responseDecodable(of: TeamResponse.self) { response in
+             switch response.result {
+             case .success(let data):
+                 print("sucess")
+                 DispatchQueue.main.async {
+                     complitionHandler(data)
+
+                 }
+             case .failure(let error):
+                 print("\(error.localizedDescription)")
+                 DispatchQueue.main.async {
+                     complitionHandler(nil)
+                 }
+             }
+         }
+    }
+
 }

@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct TeamDetails:Codable{
+    let team_name: String
+    let team_logo: String?
+    let coaches: [Coach]?
+    let players: [Player]?
+}

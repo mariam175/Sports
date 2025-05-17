@@ -171,6 +171,19 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         return section
         
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 2 {
+            let selectedTeam = teams[indexPath.row]
+            print("Team Key: \(selectedTeam.teamKey)")
+            let PSVC = PlayersScreenViewController(nibName: "PlayersScreenViewController", bundle: nil)
+            PSVC.presenter = TeamDetailsPresenter(PSVC: PSVC, sport: self.sport ?? "football")
+            PSVC.presenter?.fetchTeamDetails(teamId: selectedTeam.teamKey)
+            navigationController?.pushViewController(PSVC, animated: true)
+
+        }
+    }
+
     /*
     // MARK: - Navigation
 

@@ -11,16 +11,10 @@ class PlayersScreenViewController: UIViewController,UITableViewDelegate, UITable
 
     @IBOutlet weak var PlayersTable: UITableView!
 
-    struct Player {
-        let name: String
-        let imageName: String
-    }
-
-    let players: [Player] = [
-        Player(name: "Cristiano Ronaldo", imageName: "ronaldo"),
-        Player(name: "Lionel Messi", imageName: "messi"),
-        Player(name: "Mohamed Salah", imageName: "salah")
-    ]
+    var presenter: TeamDetailsPresenter!
+    var team: TeamDetails?
+    var sport : String?
+    var selectedTeam :Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,30 +34,45 @@ class PlayersScreenViewController: UIViewController,UITableViewDelegate, UITable
         case 0,1:
             return 1
         default:
-            return players.count
+            return team?.players?.count ?? 0
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let player = players[indexPath.row]
         switch indexPath.section {
 
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TeamLogo", for: indexPath) as! TeamLogo
-            cell.TeamImg.image = UIImage(named: "placeholder")
+            if let logo = team?.team_logo, let url = URL(string: logo) {
+                cell.TeamImg.sd_setImage(with: url)
+            }
             return cell
 
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CoachStaticCell", for: indexPath) as! CoachStaticCell
-            cell.CoachImg.image = UIImage(named: "placeholder")
-            cell.CoachName.text = player.name
+            if let coach = team?.coaches?.first {
+                        cell.CoachName.text = coach.coach_name
+                cell.CoachImg.image = UIImage(named: "coach")
+
+                cell.CoachImg.sd_setImage(with: URL(string: coach.coach_image ?? ""), placeholderImage: UIImage(named: "coach"))
+                   }else{
+                       cell.CoachImg.image = UIImage(named: "coach")
+                   }
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PlayersStaticCell", for: indexPath) as! PlayersStaticCell
 
-            cell.PlayerName.text = player.name
-            cell.PlayerImg.image = UIImage(named: "placeholder")
+
+            if let player = team?.players?[indexPath.row] {
+                       cell.PlayerName.text = player.player_name
+                cell.PlayerImg.image = UIImage(named: "player")
+
+                cell.PlayerImg.sd_setImage(with: URL(string: player.player_image ?? ""), placeholderImage: UIImage(named: "player"))
+                   }else{
+                       cell.PlayerImg.image = UIImage(named: "player")
+                   }
+
             return cell
         }
     }

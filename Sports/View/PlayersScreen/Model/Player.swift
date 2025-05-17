@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct Player: Codable {
+    let player_name: String
+    let player_image: String?
+}
