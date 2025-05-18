@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventsViewController" customModule="Sports" customModuleProvider="target">
             <connections>
                 <outlet property="eventsCV" destination="X4d-he-yW1" id="S70-gK-fW3"/>
+                <outlet property="favBtn" destination="90J-Dj-HGj" id="d70-b5-GfD"/>
                 <outlet property="leagueName" destination="jVn-Eh-sYt" id="CZr-GD-Y9Y"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -40,6 +41,9 @@
                     <rect key="frame" x="240.66666666666663" y="59" width="140.33333333333337" height="34.333333333333343"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
+                    <connections>
+                        <action selector="addLeagueToFav:" destination="-1" eventType="touchUpInside" id="adt-WM-5A8"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

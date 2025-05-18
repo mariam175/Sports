@@ -12,13 +12,15 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
     
     @IBOutlet weak var eventsCV: UICollectionView!
     @IBOutlet weak var leagueName: UILabel!
-    var leagueTitle : String?
+    
+    @IBOutlet weak var favBtn: UIButton!
+    
     var upComingEvents : [Event] = []
     var allLatestEvents : [Event] = []
     var teams : [Team] = []
     var preseter : LeaguesDetailsPresenter?
     var sport : String?
-    var league : Int?
+    var league : Leagues?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +32,14 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         
         let teamCellNib = UINib(nibName: "TeamsCollectionViewCell", bundle: nil)
         eventsCV.register(teamCellNib, forCellWithReuseIdentifier: "teamCell")
-        preseter = LeaguesDetailsPresenter(eventsVC: self , sport: self.sport ?? "football" , league: self.league ?? 0)
-        
+        guard let league = self.league else {
+            return
+        }
+        preseter = LeaguesDetailsPresenter(eventsVC: self , sport: self.sport ?? "football" , league: league)
+
         preseter?.fetchUpComingEvents()
         preseter?.fetchLeatestEvents()
+        preseter?.isFavLeague(league: league)
         
         print(upComingEvents.first?.event_away_team ?? "no")
         let layout = UICollectionViewCompositionalLayout { index , envorinment in
@@ -50,7 +56,7 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
-        leagueName.text = leagueTitle ?? "League"
+        leagueName.text = league?.league_name ?? "League"
     }
     func reloadData(){
         getTeams()
@@ -183,6 +189,21 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
 
         }
     }
+    
+    func isFavLeague(isFav : Bool){
+        if isFav{
+            self.favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }else{
+            self.favBtn.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
+    }
+    
+    
+    @IBAction func addLeagueToFav(_ sender: Any) {
+        preseter?.addToFav()
+        self.favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+    }
+    
 
     /*
     // MARK: - Navigation

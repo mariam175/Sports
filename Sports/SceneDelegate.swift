@@ -24,8 +24,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let sportsVC = SportsViewController(nibName: "SportsViewController", bundle: nil)
         sportsVC.tabBarItem = UITabBarItem(title: "Sports", image: UIImage(systemName: "sportscourt"), tag: 0)
         
+        let favVC = FavTableViewController(nibName: "FavTableViewController", bundle: nil)
+        favVC.tabBarItem = UITabBarItem(title: "Favourites", image: UIImage(systemName: "heart"), tag: 1)
+        
         let tabBarController = UITabBarController()
-            tabBarController.viewControllers = [sportsVC]
+            tabBarController.viewControllers = [sportsVC, favVC]
         let floraColor = UIColor(red: 0.0, green: 1.0, blue: 0.5, alpha: 1.0)
         tabBarController.tabBar.tintColor = floraColor
        
