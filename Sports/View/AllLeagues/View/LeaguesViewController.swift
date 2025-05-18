@@ -69,8 +69,7 @@ class LeaguesViewController: UIViewController, UITableViewDelegate, UITableViewD
         print("go to Details")
         let detalisLVC = EventsViewController(nibName: "EventsViewController", bundle: nil)
         detalisLVC.sport = self.sport
-        detalisLVC.league = leagues?[indexPath.row].league_key
-        detalisLVC.leagueTitle = leagues?[indexPath.row].league_name
+        detalisLVC.league = leagues?[indexPath.row]
         navigationController?.pushViewController(detalisLVC, animated: true)
 
     }

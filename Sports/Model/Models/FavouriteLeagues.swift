@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct FavouriteLeagues{
+    var leagueLogo : String
+    var leagueName : String
+    var leagueKey : Int
+    var sport : String
+}

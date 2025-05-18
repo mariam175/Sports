@@ -8,38 +8,50 @@
 import UIKit
 
 class FavTableViewController: UITableViewController {
-        
+    
+    var favouriteLeagues : [FavouriteLeagues] = []
+    var presenter : FavouritesPresenter?
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        let favCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
+        tableView.register(favCell, forCellReuseIdentifier: "favCell")
+        presenter = FavouritesPresenter(favVC: self)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        presenter?.getFavLeagues()
+        
+    }
+    
+    func getData(){
+        favouriteLeagues = presenter?.favouriteLeagues ?? []
+        tableView.reloadData()
+        
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return favouriteLeagues.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "favCell", for: indexPath) as! FavouritesTableViewCell
+        cell.favImage.sd_setImage(with: URL(string: favouriteLeagues[indexPath.row].leagueLogo), placeholderImage: UIImage(named: "placeholder"))
+        cell.favLeaguesName.text = favouriteLeagues[indexPath.row].leagueName
         return cell
     }
-    */
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
+
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -49,17 +61,16 @@ class FavTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.

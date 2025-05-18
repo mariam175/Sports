@@ -12,15 +12,16 @@ class LeaguesDetailsPresenter{
     var sport : String
     var latestEvents:[Event]?
     var eventsVC : EventsViewController
-    var league:Int
+    var league:Leagues
+    let favCoreData = FavouritesDB.shared
     
-    init(eventsVC: EventsViewController, sport : String, league:Int) {
+    init(eventsVC: EventsViewController, sport : String, league:Leagues) {
         self.eventsVC = eventsVC
         self.sport = sport
         self.league = league
     }
     func fetchUpComingEvents(){
-        Network.getUpComingEvents(leagueId: league, sport: sport){
+        Network.getUpComingEvents(leagueId: league.league_key, sport: sport){
             [weak self] result in
             self?.upComingEvents = result?.result
             DispatchQueue.main.async {
@@ -30,7 +31,7 @@ class LeaguesDetailsPresenter{
         }
     }
     func fetchLeatestEvents(){
-        Network.getUpLatestEvents(leagueId: league, sport: sport){
+        Network.getUpLatestEvents(leagueId: league.league_key, sport: sport){
             [weak self] result in
             self?.latestEvents = result?.result
             DispatchQueue.main.async {
@@ -38,5 +39,13 @@ class LeaguesDetailsPresenter{
                 self?.eventsVC.reloadData()
             }
         }
+    }
+    
+    func addToFav(){
+        favCoreData.addToFav(league: league, sport: sport)
+    }
+    func isFavLeague(league : Leagues){
+        let isFav = favCoreData.isFavLeagues(league: league)
+        eventsVC.isFavLeague(isFav: isFav)
     }
 }
