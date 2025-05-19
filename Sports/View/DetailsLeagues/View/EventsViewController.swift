@@ -21,7 +21,8 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
     var preseter : LeaguesDetailsPresenter?
     var sport : String?
     var league : Leagues?
-    
+    var isFavouriteLeague: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         eventsCV.dataSource = self
@@ -191,8 +192,10 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
     }
     
     func isFavLeague(isFav : Bool){
+        isFavouriteLeague = isFav
         if isFav{
             self.favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+
         }else{
             self.favBtn.setImage(UIImage(systemName: "heart"), for: .normal)
         }
@@ -200,8 +203,19 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
     
     
     @IBAction func addLeagueToFav(_ sender: Any) {
-        preseter?.addToFav()
-        self.favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        if isFavouriteLeague {
+            guard let leagueToDelete = league?.league_key else { return }
+            preseter?.deleteFromFavourites(leagueKey: leagueToDelete)
+            isFavouriteLeague = false
+            favBtn.setImage(UIImage(systemName: "heart"), for: .normal)
+        }else{
+            preseter?.addToFav()
+            isFavouriteLeague = true
+            self.favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+
+        }
+
+
     }
     
 

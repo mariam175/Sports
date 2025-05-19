@@ -44,6 +44,10 @@ class LeaguesDetailsPresenter{
     func addToFav(){
         favCoreData.addToFav(league: league, sport: sport)
     }
+
+    func deleteFromFavourites(leagueKey:Int){
+        favCoreData.deleteFromFav(leagueKey: leagueKey)
+    }
     func isFavLeague(league : Leagues){
         let isFav = favCoreData.isFavLeagues(league: league)
         eventsVC.isFavLeague(isFav: isFav)
