@@ -18,6 +18,7 @@ class PlayersScreenViewController: UIViewController,UITableViewDelegate, UITable
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Team Details"
         PlayersTable.register(UINib(nibName: "TeamLogo", bundle: nil), forCellReuseIdentifier: "TeamLogo")
         PlayersTable.register(UINib(nibName: "CoachStaticCell", bundle: nil), forCellReuseIdentifier: "CoachStaticCell")
            PlayersTable.register(UINib(nibName: "PlayersStaticCell", bundle: nil), forCellReuseIdentifier: "PlayersStaticCell")

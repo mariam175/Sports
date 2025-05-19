@@ -24,6 +24,7 @@
 		221C0C3C2DD8DB29004CC766 /* TeamDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C0C3B2DD8DB29004CC766 /* TeamDetails.swift */; };
 		221C0C3E2DD8DD66004CC766 /* Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C0C3D2DD8DD66004CC766 /* Coach.swift */; };
 		221C0C402DD8DDD9004CC766 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C0C3F2DD8DDD9004CC766 /* Player.swift */; };
+		222213DA2DDA6BD200BA0B35 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 222213D92DDA6BD200BA0B35 /* Reachability */; };
 		228410652DD7A4B100003DC4 /* TeamsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2284105F2DD7A4B000003DC4 /* TeamsCollectionViewCell.xib */; };
 		228410662DD7A4B100003DC4 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228410602DD7A4B000003DC4 /* EventsViewController.swift */; };
 		228410672DD7A4B100003DC4 /* EventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 228410612DD7A4B100003DC4 /* EventCollectionViewCell.xib */; };
@@ -125,6 +126,7 @@
 			files = (
 				22ED397D2DD6758900EB0564 /* SDWebImage in Frameworks */,
 				22F464932DD5244D009D7625 /* Alamofire in Frameworks */,
+				222213DA2DDA6BD200BA0B35 /* Reachability in Frameworks */,
 				22ED397F2DD6758900EB0564 /* SDWebImageMapKit in Frameworks */,
 				22F464952DD5244D009D7625 /* AlamofireDynamic in Frameworks */,
 			);
@@ -404,6 +406,7 @@
 				22F464942DD5244D009D7625 /* AlamofireDynamic */,
 				22ED397C2DD6758900EB0564 /* SDWebImage */,
 				22ED397E2DD6758900EB0564 /* SDWebImageMapKit */,
+				222213D92DDA6BD200BA0B35 /* Reachability */,
 			);
 			productName = Sports;
 			productReference = 22A8BD862DD3AF5600F5920D /* Sports.app */;
@@ -436,6 +439,7 @@
 			packageReferences = (
 				22F464912DD5244D009D7625 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				22ED397B2DD6758900EB0564 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				222213D82DDA6BD200BA0B35 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = 22A8BD872DD3AF5600F5920D /* Products */;
 			projectDirPath = "";
@@ -725,6 +729,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		222213D82DDA6BD200BA0B35 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		22ED397B2DD6758900EB0564 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
@@ -744,6 +756,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		222213D92DDA6BD200BA0B35 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 222213D82DDA6BD200BA0B35 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
 		22ED397C2DD6758900EB0564 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 22ED397B2DD6758900EB0564 /* XCRemoteSwiftPackageReference "SDWebImage" */;
