@@ -51,13 +51,13 @@
             <constraints>
                 <constraint firstItem="X4d-he-yW1" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" multiplier="0.862595" id="879-ED-z2b"/>
                 <constraint firstItem="jVn-Eh-sYt" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="AOQ-c5-5gY"/>
+                <constraint firstItem="jVn-Eh-sYt" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="DlW-7i-vM4"/>
                 <constraint firstItem="X4d-he-yW1" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="SOY-2L-cli"/>
                 <constraint firstItem="90J-Dj-HGj" firstAttribute="leading" secondItem="jVn-Eh-sYt" secondAttribute="trailing" constant="20" id="WJm-z6-N0e"/>
                 <constraint firstItem="X4d-he-yW1" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.9" id="eQP-rh-Uu8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="90J-Dj-HGj" secondAttribute="trailing" constant="12" id="kIm-bG-dKQ"/>
                 <constraint firstItem="90J-Dj-HGj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="sO6-Y4-mKM"/>
                 <constraint firstItem="X4d-he-yW1" firstAttribute="top" secondItem="jVn-Eh-sYt" secondAttribute="bottom" constant="24" id="wUj-dT-sNP"/>
-                <constraint firstItem="jVn-Eh-sYt" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="z8D-NI-2Qp"/>
             </constraints>
             <point key="canvasLocation" x="20.610687022900763" y="-11.267605633802818"/>
         </view>

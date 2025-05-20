@@ -18,6 +18,7 @@ class EventCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var eventDate: UILabel!
     
+    @IBOutlet weak var finalResult: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
