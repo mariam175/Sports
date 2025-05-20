@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct LeagueTeams : Codable{
+    var standing_team : String
+    var team_key : Int
+}

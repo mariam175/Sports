@@ -43,7 +43,7 @@
                 <outlet property="favImage" destination="fY4-2x-L0K" id="J6O-5r-lhf"/>
                 <outlet property="favLeaguesName" destination="uH0-qV-Eof" id="sxB-a5-YSa"/>
             </connections>
-            <point key="canvasLocation" x="77.862595419847324" y="-5.2816901408450709"/>
+            <point key="canvasLocation" x="128" y="-10"/>
         </tableViewCell>
     </objects>
 </document>

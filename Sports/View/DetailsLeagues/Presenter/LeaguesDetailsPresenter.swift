@@ -11,6 +11,8 @@ class LeaguesDetailsPresenter{
     var upComingEvents :[Event]?
     var sport : String
     var latestEvents:[Event]?
+    var todayLatestEvents:[Event]?
+    var teams:[LeagueTeams]?
     var eventsVC : EventsViewController
     var league:Leagues
     let favCoreData = FavouritesDB.shared
@@ -20,10 +22,17 @@ class LeaguesDetailsPresenter{
         self.sport = sport
         self.league = league
     }
+    
     func fetchUpComingEvents(){
+        
         Network.getUpComingEvents(leagueId: league.league_key, sport: sport){
             [weak self] result in
-            self?.upComingEvents = result?.result
+            self?.upComingEvents = result?.result.filter{
+                $0.event_final_result == "-"
+            }
+            self?.todayLatestEvents = result?.result.filter{
+                $0.event_final_result != "-"
+            }
             DispatchQueue.main.async {
                 self?.eventsVC.upComingEvents = self?.upComingEvents ?? []
                 self?.eventsVC.reloadData()
@@ -33,9 +42,20 @@ class LeaguesDetailsPresenter{
     func fetchLeatestEvents(){
         Network.getUpLatestEvents(leagueId: league.league_key, sport: sport){
             [weak self] result in
-            self?.latestEvents = result?.result
+            self?.latestEvents = (self?.todayLatestEvents ?? []) + (result?.result ?? [])
             DispatchQueue.main.async {
                 self?.eventsVC.allLatestEvents = self?.latestEvents ?? []
+                self?.eventsVC.reloadData()
+            }
+        }
+    }
+    
+    func getTeams(){
+        Network.getTeams(leagueId: league.league_key, sport: sport){ [weak self]
+            result in
+            self?.teams = result?.result.total
+            DispatchQueue.main.async {
+                self?.eventsVC.teams = self?.teams ?? []
                 self?.eventsVC.reloadData()
             }
         }
@@ -48,6 +68,7 @@ class LeaguesDetailsPresenter{
     func deleteFromFavourites(leagueKey:Int){
         favCoreData.deleteFromFav(leagueKey: leagueKey)
     }
+    
     func isFavLeague(league : Leagues){
         let isFav = favCoreData.isFavLeagues(league: league)
         eventsVC.isFavLeague(isFav: isFav)

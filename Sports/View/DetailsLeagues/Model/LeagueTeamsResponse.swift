@@ -7,6 +7,10 @@
 
 import Foundation
 
-struct TeamResponse{
-    var total : [Team]
+struct LeagueTeamsResponse : Codable{
+    var result: LeaguesTeamsResult
+}
+
+struct LeaguesTeamsResult : Codable{
+    var total : [LeagueTeams]
 }

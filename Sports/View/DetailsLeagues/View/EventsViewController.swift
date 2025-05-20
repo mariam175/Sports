@@ -17,7 +17,7 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
     
     var upComingEvents : [Event] = []
     var allLatestEvents : [Event] = []
-    var teams : [Team] = []
+    var teams : [LeagueTeams] = []
     var preseter : LeaguesDetailsPresenter?
     var sport : String?
     var league : Leagues?
@@ -33,6 +33,10 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         
         let teamCellNib = UINib(nibName: "TeamsCollectionViewCell", bundle: nil)
         eventsCV.register(teamCellNib, forCellWithReuseIdentifier: "teamCell")
+        
+        let headerNib = UINib(nibName: "HeaderCollectionReusableView", bundle: nil)
+        eventsCV.register(headerNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
+        
         guard let league = self.league else {
             return
         }
@@ -40,6 +44,7 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
 
         preseter?.fetchUpComingEvents()
         preseter?.fetchLeatestEvents()
+        preseter?.getTeams()
         preseter?.isFavLeague(league: league)
         
         print(upComingEvents.first?.event_away_team ?? "no")
@@ -60,34 +65,9 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         leagueName.text = league?.league_name ?? "League"
     }
     func reloadData(){
-        getTeams()
         eventsCV.reloadData()
     }
     
-    func getTeams(){
-        
-        for i in upComingEvents{
-            teams.append(Team(teamKey: i.away_team_key, teamLogo: i.away_team_logo))
-            teams.append(Team(teamKey: i.home_team_key, teamLogo: i.home_team_logo))
-        }
-        for i in allLatestEvents{
-            teams.append(Team(teamKey: i.away_team_key, teamLogo: i.away_team_logo))
-            teams.append(Team(teamKey: i.home_team_key, teamLogo: i.home_team_logo))
-        }
-        var teamSet = Set<Int>()
-        var uniteams = teams.filter{
-            team in
-            if (teamSet.contains(team.teamKey)){
-                return false
-            }
-            else{
-                teamSet.insert(team.teamKey)
-            }
-            return true
-        }
-        teams = uniteams
-        
-    }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch(section){
@@ -109,9 +89,10 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if (indexPath.section == 2){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "teamCell", for: indexPath) as! TeamsCollectionViewCell
-            cell.teamImage.sd_setImage(with: URL(string:teams[indexPath.row].teamLogo), placeholderImage: UIImage(named: "placeholder"))
+            cell.teamImage.sd_setImage(with: URL(string:Config.teamImage(teamKey: teams[indexPath.row].team_key, teamName: teams[indexPath.row].standing_team)), placeholderImage: UIImage(named: "placeholder"))
             return cell
         }
+        
         if (indexPath.section == 1){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath)
             as! EventCollectionViewCell
@@ -121,8 +102,10 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
             cell.homeName.text = allLatestEvents[indexPath.row].event_home_team
             cell.eventTime.text = allLatestEvents[indexPath.row].event_time
             cell.eventDate.text = allLatestEvents[indexPath.row].event_date
+            cell.finalResult.text = allLatestEvents[indexPath.row].event_final_result
             return cell
         }
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath)
         as! EventCollectionViewCell
         cell.awayImage.sd_setImage(with: URL(string: upComingEvents[indexPath.row].away_team_logo), placeholderImage: UIImage(named: "placeholder"))
@@ -130,7 +113,8 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         cell.homeImage.sd_setImage(with: URL(string: upComingEvents[indexPath.row].home_team_logo), placeholderImage: UIImage(named: "placeholder"))
         cell.homeName.text = upComingEvents[indexPath.row].event_home_team
         cell.eventTime.text = upComingEvents[indexPath.row].event_time
-        cell.eventDate.isHidden = true
+        cell.eventDate.text = upComingEvents[indexPath.row].event_date
+        cell.finalResult.isHidden = true
         return cell
         
     }
@@ -147,6 +131,13 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 32, trailing: 0)
         section.orthogonalScrollingBehavior = .continuous
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                    heightDimension: .absolute(44))
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top)
+            section.boundarySupplementaryItems = [sectionHeader]
         return section
         
     }
@@ -161,6 +152,13 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0)
         section.orthogonalScrollingBehavior = .none
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                    heightDimension: .absolute(44))
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top)
+            section.boundarySupplementaryItems = [sectionHeader]
         return section
         
     }
@@ -175,6 +173,13 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0)
         section.orthogonalScrollingBehavior = .continuous
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                    heightDimension: .absolute(44))
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top)
+            section.boundarySupplementaryItems = [sectionHeader]
         return section
         
     }
@@ -182,13 +187,30 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 2 {
             let selectedTeam = teams[indexPath.row]
-            print("Team Key: \(selectedTeam.teamKey)")
+            print("Team Key: \(selectedTeam.team_key)")
             let PSVC = PlayersScreenViewController(nibName: "PlayersScreenViewController", bundle: nil)
             PSVC.presenter = TeamDetailsPresenter(PSVC: PSVC, sport: self.sport ?? "football")
-            PSVC.presenter?.fetchTeamDetails(teamId: selectedTeam.teamKey)
+            PSVC.presenter?.fetchTeamDetails(teamId: selectedTeam.team_key)
             navigationController?.pushViewController(PSVC, animated: true)
 
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader{
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! HeaderCollectionReusableView
+            switch indexPath.section {
+                   case 0:
+                header.header.text = upComingEvents.isEmpty ? "" : "Upcoming Events"
+                   case 1:
+                header.header.text = allLatestEvents.isEmpty ? "" : "Latest Events"
+                   case 2:
+                header.header.text = teams.isEmpty ? "" : "Teams"
+                   default:
+                header.header.text = ""
+                   }
+                   return header
+        }
+        return UICollectionReusableView()
     }
     
     func isFavLeague(isFav : Bool){
