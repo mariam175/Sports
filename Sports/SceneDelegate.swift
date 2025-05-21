@@ -21,22 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         window = UIWindow(windowScene: scene)
-        let sportsVC = SportsViewController(nibName: "SportsViewController", bundle: nil)
-        sportsVC.tabBarItem = UITabBarItem(title: "Sports", image: UIImage(systemName: "sportscourt"), tag: 0)
-        
-        let favVC = FavTableViewController(nibName: "FavTableViewController", bundle: nil)
-        favVC.tabBarItem = UITabBarItem(title: "Favourites", image: UIImage(systemName: "heart"), tag: 1)
-        
-        let tabBarController = UITabBarController()
-            tabBarController.viewControllers = [sportsVC, favVC]
-        let floraColor = UIColor(red: 0.0, green: 1.0, blue: 0.5, alpha: 1.0)
-        tabBarController.tabBar.tintColor = floraColor
-       
-        window?.rootViewController = UINavigationController(rootViewController: tabBarController)
 
+        let splashVC = SplashScreenViewController(nibName: "SplashScreenViewController", bundle: nil)
+        let navController = UINavigationController(rootViewController: splashVC)
+        window?.rootViewController = navController
         window?.makeKeyAndVisible()
 
-//        guard let _ = (scene as? UIWindowScene) else { return }
 
     }
 
