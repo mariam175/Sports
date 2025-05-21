@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_72" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="onBoardingScreenTwo" customModule="Sports" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="WUB-GV-wfH" id="VeT-nD-jWg"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" id="WUB-GV-wfH">
+            <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="page2" translatesAutoresizingMaskIntoConstraints="NO" id="Sc2-6d-12y">
+                    <rect key="frame" x="1.3333333333333428" y="-2.6666666666666856" width="427.33333333333326" height="937.33333333333348"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="464" id="1Zr-vE-enM"/>
+                        <constraint firstAttribute="width" constant="448" id="7nj-aC-cTk"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="950" id="8Lm-hp-4Wa"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="996" id="Bda-Wu-xhj"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="454" id="MMr-AN-kN2"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="996" id="OeV-PJ-crP"/>
+                        <constraint firstAttribute="width" secondItem="Sc2-6d-12y" secondAttribute="height" multiplier="227:498" id="PIN-dz-53V"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="1198" id="R4l-n0-gP0"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="454" id="TxO-l3-pDy"/>
+                        <constraint firstAttribute="height" constant="937" id="rrM-qP-ihX"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="454" id="xb2-li-262"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v6k-Kf-kw3">
+                    <rect key="frame" x="161" y="774" width="107" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="107" id="DB0-1e-O9q"/>
+                        <constraint firstAttribute="height" constant="35" id="Soq-Bd-lrv"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="filled" title="Read more"/>
+                    <connections>
+                        <action selector="goToThird:" destination="-1" eventType="touchUpInside" id="afR-B7-Jg4"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="The Best Leagues in The World" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LM-Ah-RS9">
+                    <rect key="frame" x="28" y="717" width="374" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31.329999999999998" id="9y6-13-HxJ"/>
+                        <constraint firstAttribute="width" constant="374" id="DP9-IM-3fS"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="dET-5W-AYm"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="6LM-Ah-RS9" firstAttribute="top" secondItem="dET-5W-AYm" secondAttribute="top" constant="623" id="E7Y-Fa-rbd"/>
+                <constraint firstItem="Sc2-6d-12y" firstAttribute="centerY" secondItem="WUB-GV-wfH" secondAttribute="centerY" id="EFg-2V-xeZ"/>
+                <constraint firstItem="6LM-Ah-RS9" firstAttribute="centerX" secondItem="WUB-GV-wfH" secondAttribute="centerX" id="Ldn-Lt-jqM"/>
+                <constraint firstItem="v6k-Kf-kw3" firstAttribute="leading" secondItem="dET-5W-AYm" secondAttribute="leading" id="XbM-6x-tAb"/>
+                <constraint firstItem="6LM-Ah-RS9" firstAttribute="top" secondItem="dET-5W-AYm" secondAttribute="top" constant="623" id="Xn7-7n-sua"/>
+                <constraint firstItem="6LM-Ah-RS9" firstAttribute="top" secondItem="dET-5W-AYm" secondAttribute="top" constant="623" id="clp-t1-DEW"/>
+                <constraint firstItem="Sc2-6d-12y" firstAttribute="centerX" secondItem="WUB-GV-wfH" secondAttribute="centerX" id="gOV-WH-Xac"/>
+                <constraint firstAttribute="trailing" secondItem="6LM-Ah-RS9" secondAttribute="trailing" id="gpD-z2-wL9"/>
+                <constraint firstItem="v6k-Kf-kw3" firstAttribute="top" secondItem="Sc2-6d-12y" secondAttribute="bottom" constant="-135.66666666666674" id="j29-uA-KdN"/>
+                <constraint firstAttribute="trailing" secondItem="v6k-Kf-kw3" secondAttribute="trailing" id="slC-fr-feF"/>
+                <constraint firstItem="6LM-Ah-RS9" firstAttribute="top" secondItem="dET-5W-AYm" secondAttribute="top" constant="623" id="xGg-2U-oLO"/>
+                <constraint firstItem="6LM-Ah-RS9" firstAttribute="leading" secondItem="dET-5W-AYm" secondAttribute="leading" id="xyL-CW-qgn"/>
+            </constraints>
+            <point key="canvasLocation" x="1" y="-8"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="page2" width="1080" height="1920"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
