@@ -32,7 +32,10 @@ class LeaguesViewCell: UITableViewCell {
         logoOfLeague.layer.cornerRadius = logoOfLeague.frame.size.width / 2
         logoOfLeague.clipsToBounds = true
         
-        
+        contentView.layer.cornerRadius = 12
+            contentView.layer.borderWidth = 1.0
+            contentView.layer.borderColor = UIColor.lightGray.cgColor
+            contentView.clipsToBounds = true
 
      }
 

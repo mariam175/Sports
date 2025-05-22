@@ -20,13 +20,18 @@ class TeamDetailsPresenter{
 
 
     func fetchTeamDetails(teamId: Int){
-        Network.getTeamDetails(teamId: teamId, sport: sport ?? "") { [weak self] response in
+        
+        Network.fetchData(sport: sport, quray: "met=Teams&teamId=\(teamId)"){
+            [weak self] (response : TeamResponse? , error) in
             self?.team = response?.result.first
             DispatchQueue.main.async {
                 self?.PSVC.team = self?.team
-                self?.PSVC.PlayersTable.reloadData()
+                print(response?.result.first?.coaches?.first?.coach_image ?? "no image")
+                self?.PSVC.reloadTeamData()
+                
             }
         }
+        
     }
 
 
