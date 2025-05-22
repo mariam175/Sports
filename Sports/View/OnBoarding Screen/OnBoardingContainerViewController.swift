@@ -55,7 +55,11 @@ class OnBoardingContainerViewController: UIPageViewController, UIPageViewControl
     }
 
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return 0
+        guard let currentVC = viewControllers?.first,
+                 let currentIndex = arrayOfViewControllers.firstIndex(of: currentVC) else {
+               return 0
+           }
+           return currentIndex
     }
 }
 

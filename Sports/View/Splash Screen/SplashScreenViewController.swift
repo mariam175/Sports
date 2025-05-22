@@ -11,7 +11,10 @@ class SplashScreenViewController: UIViewController {
 
     private var animationView: LottieAnimationView?
 
-       override func viewDidLoad() {
+    @IBOutlet var splashView: SportCollectionViewCell!
+
+
+    override func viewDidLoad() {
            super.viewDidLoad()
            playAnimation()
        }
@@ -37,13 +40,24 @@ class SplashScreenViewController: UIViewController {
 
 
     private func playAnimation() {
-        animationView = .init(name: "Animation")
-        animationView?.frame = view.bounds
-        animationView?.contentMode = .scaleAspectFit
-        animationView?.loopMode = .loop
-        animationView?.animationSpeed = 1.0
-        view.addSubview(animationView!)
-        animationView?.play()
+        animationView = LottieAnimationView(name: "Animation")
+           guard let animationView = animationView else { return }
+
+           animationView.translatesAutoresizingMaskIntoConstraints = false
+           animationView.contentMode = .scaleAspectFit
+           animationView.loopMode = .loop
+           animationView.animationSpeed = 1.0
+
+        splashView.addSubview(animationView)
+
+           NSLayoutConstraint.activate([
+               animationView.leadingAnchor.constraint(equalTo: splashView.leadingAnchor),
+               animationView.trailingAnchor.constraint(equalTo: splashView.trailingAnchor),
+               animationView.topAnchor.constraint(equalTo: splashView.topAnchor),
+               animationView.bottomAnchor.constraint(equalTo: splashView.bottomAnchor)
+           ])
+
+           animationView.play()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
             self?.navigateNext()
@@ -53,7 +67,7 @@ class SplashScreenViewController: UIViewController {
 
     func navigateNext() {
         if UserDefaults.standard.hasSeenOnboarding {
-            goToMainScreen()// ✅ لازم تتنفذ علشان يروح على Home
+            goToMainScreen()
         } else {
             goToOnboarding()
         }
@@ -62,7 +76,7 @@ class SplashScreenViewController: UIViewController {
     func goToOnboarding() {
         let onboardingVC = OnBoardingContainerViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 
-        onboardingVC.modalPresentationStyle = .fullScreen // ✅ مهم جدًا
+        onboardingVC.modalPresentationStyle = .fullScreen
         UIApplication.shared.windows.first?.rootViewController = onboardingVC
         UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
