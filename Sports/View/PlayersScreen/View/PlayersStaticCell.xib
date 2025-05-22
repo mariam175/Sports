@@ -15,26 +15,25 @@
                 <rect key="frame" x="0.0" y="0.0" width="422" height="64"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10e-XM-Uat">
-                        <rect key="frame" x="140" y="2" width="282" height="62"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10e-XM-Uat">
+                        <rect key="frame" x="123.99999999999999" y="22" width="41.333333333333329" height="20.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aTE-EO-Fei">
-                        <rect key="frame" x="6" y="0.0" width="89" height="62"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aTE-EO-Fei">
+                        <rect key="frame" x="12" y="-8" width="80" height="80"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="89" id="2Mb-qd-jlH"/>
-                            <constraint firstAttribute="width" secondItem="aTE-EO-Fei" secondAttribute="height" multiplier="89:62" id="6I8-vY-Zc0"/>
-                            <constraint firstAttribute="width" secondItem="aTE-EO-Fei" secondAttribute="height" multiplier="89:62" id="6M2-vi-bld"/>
+                            <constraint firstAttribute="width" constant="80" id="bsb-IV-OJ8"/>
+                            <constraint firstAttribute="height" constant="80" id="iCS-1g-cMj"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="aTE-EO-Fei" firstAttribute="top" secondItem="oBD-jN-Z6B" secondAttribute="top" id="gjk-NG-s7j"/>
-                    <constraint firstAttribute="bottom" secondItem="aTE-EO-Fei" secondAttribute="bottom" id="ohl-v3-T7z"/>
-                    <constraint firstItem="aTE-EO-Fei" firstAttribute="leading" secondItem="oBD-jN-Z6B" secondAttribute="leading" id="tb2-MC-ld5"/>
+                    <constraint firstItem="10e-XM-Uat" firstAttribute="leading" secondItem="aTE-EO-Fei" secondAttribute="trailing" constant="32" id="fwZ-hK-j4a"/>
+                    <constraint firstItem="10e-XM-Uat" firstAttribute="centerY" secondItem="oBD-jN-Z6B" secondAttribute="centerY" id="gfK-Wm-wUr"/>
+                    <constraint firstItem="aTE-EO-Fei" firstAttribute="leading" secondItem="oBD-jN-Z6B" secondAttribute="leading" constant="12" id="kYz-y9-y5X"/>
+                    <constraint firstItem="aTE-EO-Fei" firstAttribute="centerY" secondItem="oBD-jN-Z6B" secondAttribute="centerY" id="tUf-49-c7q"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

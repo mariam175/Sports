@@ -20,6 +20,7 @@ class FavTableViewController: UITableViewController, NetworkStatusDelegate {
 
         presenter = FavouritesPresenter(favVC: self)
         presenter?.delegate = self
+        self.title = "Favourite Leagues"
 
 
     }

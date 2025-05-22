@@ -25,8 +25,19 @@ class LeaguesDetailsPresenter{
     
     func fetchUpComingEvents(){
         
-        Network.getUpComingEvents(leagueId: league.league_key, sport: sport){
-            [weak self] result in
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let formattedDate = formatter.string(from: currentDate)
+        guard let nextWeeks = calendar.date(byAdding: .day, value: 10, to: currentDate) else { return
+        }
+        let nextWeeksFormattedDate = formatter.string(from: nextWeeks)
+        
+        Network.fetchData(sport: sport, quray: "met=Fixtures&leagueId=\(league.league_key)&from=\(formattedDate)&to=\(nextWeeksFormattedDate)"){
+            [weak self](result : EventRespose?, error) in
+            
+            
             self?.upComingEvents = result?.result.filter{
                 $0.event_final_result == "-"
             }
@@ -38,27 +49,43 @@ class LeaguesDetailsPresenter{
                 self?.eventsVC.reloadData()
             }
         }
+        
     }
     func fetchLeatestEvents(){
-        Network.getUpLatestEvents(leagueId: league.league_key, sport: sport){
-            [weak self] result in
-            self?.latestEvents = (self?.todayLatestEvents ?? []) + (result?.result ?? [])
-            DispatchQueue.main.async {
-                self?.eventsVC.allLatestEvents = self?.latestEvents ?? []
-                self?.eventsVC.reloadData()
-            }
+        
+        let calendar = Calendar.current
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        guard let yasterday = calendar.date(byAdding: .day, value: -1, to: currentDate) else { return
+        }
+        let yasterdayFormattedDate = formatter.string(from: yasterday)
+
+        guard let weekAgo = calendar.date(byAdding: .day, value: -8, to: currentDate) else { return
+        }
+        let weekFormattedDate = formatter.string(from: weekAgo)
+        
+        Network.fetchData(sport: sport, quray: "met=Fixtures&leagueId=\(league.league_key)&to=\(yasterdayFormattedDate)&from=\(weekFormattedDate)"){
+            [weak self] (result : EventRespose?, error) in
+                self?.latestEvents = (self?.todayLatestEvents ?? []) + (result?.result ?? [])
+                DispatchQueue.main.async {
+                    self?.eventsVC.allLatestEvents = self?.latestEvents ?? []
+                    self?.eventsVC.reloadData()
+                }
+            
         }
     }
     
     func getTeams(){
-        Network.getTeams(leagueId: league.league_key, sport: sport){ [weak self]
-            result in
+        Network.fetchData(sport: sport, quray: "met=Standings&leagueId=\(league.league_key)"){
+            [weak self] (result : LeagueTeamsResponse?, error) in
             self?.teams = result?.result.total
             DispatchQueue.main.async {
                 self?.eventsVC.teams = self?.teams ?? []
                 self?.eventsVC.reloadData()
             }
         }
+        
     }
     
     func addToFav(){

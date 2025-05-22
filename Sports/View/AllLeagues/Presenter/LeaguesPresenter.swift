@@ -20,13 +20,14 @@ class LeaugesPresenter{
 
     func getData(){
 
-        Network.fetchDataFromJSON(sport:sport) { [weak self] response in
-                    self?.leagues = response?.result ?? []
+        Network.fetchData(sport: sport, quray: "met=Leagues"){
+            [weak self] (response : LeaguesResponse? , error) in
+            self?.leagues = response?.result ?? []
 
-                    DispatchQueue.main.async {
-                        self?.LVC.leagues = self?.leagues ?? []
-                      self?.LVC.leaguesTable.reloadData()
-                    }
+            DispatchQueue.main.async {
+                self?.LVC.leagues = self?.leagues ?? []
+              self?.LVC.leaguesTable.reloadData()
+            }
         }
     }
 

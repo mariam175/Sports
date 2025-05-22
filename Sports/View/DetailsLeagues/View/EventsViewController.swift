@@ -12,7 +12,7 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
     
     @IBOutlet weak var eventsCV: UICollectionView!
     @IBOutlet weak var leagueName: UILabel!
-    
+    var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var favBtn: UIButton!
     
     var upComingEvents : [Event] = []
@@ -59,13 +59,18 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
             }
         }
         eventsCV.setCollectionViewLayout(layout, animated: true)
-        // Do any additional setup after loading the view.
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
     }
     override func viewWillAppear(_ animated: Bool) {
         leagueName.text = league?.league_name ?? "League"
     }
     func reloadData(){
         eventsCV.reloadData()
+        activityIndicator.stopAnimating()
     }
     
 
@@ -89,32 +94,30 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if (indexPath.section == 2){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "teamCell", for: indexPath) as! TeamsCollectionViewCell
-            cell.teamImage.sd_setImage(with: URL(string:Config.teamImage(teamKey: teams[indexPath.row].team_key, teamName: teams[indexPath.row].standing_team)), placeholderImage: UIImage(named: "placeholder"))
+            cell.teamImage.sd_setImage(with: URL(string:Config.teamImage(teamKey: teams[indexPath.row].team_key, team: teams[indexPath.row].standing_team, sport: sport ?? "football")), placeholderImage: UIImage(named: "placeholder"))
             return cell
         }
         
         if (indexPath.section == 1){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath)
             as! EventCollectionViewCell
-            cell.awayImage.sd_setImage(with: URL(string:allLatestEvents[indexPath.row].away_team_logo), placeholderImage: UIImage(named: "placeholder"))
-            cell.awayName.text = allLatestEvents[indexPath.row].event_away_team
-            cell.homeImage.sd_setImage(with: URL(string: allLatestEvents[indexPath.row].home_team_logo), placeholderImage: UIImage(named: "placeholder"))
-            cell.homeName.text = allLatestEvents[indexPath.row].event_home_team
-            cell.eventTime.text = allLatestEvents[indexPath.row].event_time
-            cell.eventDate.text = allLatestEvents[indexPath.row].event_date
-            cell.finalResult.text = allLatestEvents[indexPath.row].event_final_result
+         //   if !allLatestEvents.isEmpty {
+            cell.configre(event: allLatestEvents[indexPath.row])
+//            }else{
+//                placeholderEvents(cell: cell)
+//            }
             return cell
         }
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath)
         as! EventCollectionViewCell
-        cell.awayImage.sd_setImage(with: URL(string: upComingEvents[indexPath.row].away_team_logo), placeholderImage: UIImage(named: "placeholder"))
-        cell.awayName.text = upComingEvents[indexPath.row].event_away_team
-        cell.homeImage.sd_setImage(with: URL(string: upComingEvents[indexPath.row].home_team_logo), placeholderImage: UIImage(named: "placeholder"))
-        cell.homeName.text = upComingEvents[indexPath.row].event_home_team
-        cell.eventTime.text = upComingEvents[indexPath.row].event_time
-        cell.eventDate.text = upComingEvents[indexPath.row].event_date
+     //   if !upComingEvents.isEmpty{
+        cell.configre(event: upComingEvents[indexPath.row])
         cell.finalResult.isHidden = true
+//        }
+//        else{
+//            placeholderEvents(cell: cell)
+//        }
         return cell
         
     }
@@ -189,8 +192,7 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
             let selectedTeam = teams[indexPath.row]
             print("Team Key: \(selectedTeam.team_key)")
             let PSVC = PlayersScreenViewController(nibName: "PlayersScreenViewController", bundle: nil)
-            PSVC.presenter = TeamDetailsPresenter(PSVC: PSVC, sport: self.sport ?? "football")
-            PSVC.presenter?.fetchTeamDetails(teamId: selectedTeam.team_key)
+            PSVC.teamKey = selectedTeam.team_key
             navigationController?.pushViewController(PSVC, animated: true)
 
         }
@@ -200,11 +202,11 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! HeaderCollectionReusableView
             switch indexPath.section {
                    case 0:
-                header.header.text = upComingEvents.isEmpty ? "" : "Upcoming Events"
+                header.header.text = upComingEvents.isEmpty ? "No Upcoming Events" : "Upcoming Events"
                    case 1:
-                header.header.text = allLatestEvents.isEmpty ? "" : "Latest Events"
+                header.header.text = allLatestEvents.isEmpty ? "No Latest Events" : "Latest Events"
                    case 2:
-                header.header.text = teams.isEmpty ? "" : "Teams"
+                header.header.text = teams.isEmpty ? "No Teams" : "Teams"
                    default:
                 header.header.text = ""
                    }
@@ -238,6 +240,27 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         }
 
 
+    }
+    func placeholderEvents(cell : EventCollectionViewCell){
+        switch sport{
+        case "football":
+            cell.homeImage.image = UIImage(named: "footballPlaceholder")
+            cell.awayImage.image = UIImage(named: "footballPlaceholder")
+        case "cricket":
+            cell.homeImage.image = UIImage(named: "cricketPlaceholder")
+            cell.awayImage.image = UIImage(named: "cricketPlaceholder")
+        case "basketball":
+            cell.homeImage.image = UIImage(named: "basketballPlaceholder")
+            cell.awayImage.image = UIImage(named: "basketballPlaceholder")
+        default:
+            cell.homeImage.image = UIImage(named: "tennisPlaceholder")
+            cell.awayImage.image = UIImage(named: "tennisPlaceholder")
+        }
+        cell.homeName.text = "No Team"
+        cell.awayName.text = "No Team"
+        cell.finalResult.text = "0 - 0"
+        cell.eventDate.isHidden = true
+        cell.eventTime.isHidden = true
     }
     
 

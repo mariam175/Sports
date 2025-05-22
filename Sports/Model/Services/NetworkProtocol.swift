@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol NetworkProtocol{
+    static func fetchData<T : Decodable>(sport:String?, quray : String, complitionHandler : @escaping (T? , Error?)->Void)
+}

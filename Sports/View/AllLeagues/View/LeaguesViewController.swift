@@ -22,8 +22,9 @@ class LeaguesViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.title = "Leagues"
         leaguesTable.delegate = self
         leaguesTable.dataSource = self
-        let nib = UINib(nibName: "LeaguesViewCell", bundle: nil)
-        leaguesTable.register(nib, forCellReuseIdentifier: "cellofLeagues")
+        leaguesTable.separatorStyle = .none
+        let nib = UINib(nibName: "PlayersStaticCell", bundle: nil)
+        leaguesTable.register(nib, forCellReuseIdentifier: "PlayersStaticCell")
         presenter = LeaugesPresenter(LVC: self)
         presenter?.sport = self.sport ?? ""
         presenter?.getData()
@@ -39,21 +40,21 @@ class LeaguesViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellofLeagues", for: indexPath) as? LeaguesViewCell else{
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PlayersStaticCell", for: indexPath) as? PlayersStaticCell else{
             return UITableViewCell()
         }
 
 
         if let league = leagues?[indexPath.row] {
-            cell.nameOfLeague.text = league.league_name
+            cell.PlayerName.text = league.league_name
         } else {
-            cell.nameOfLeague.text = "No name"
+            cell.PlayerName.text = "No name"
         }
 
         if let imageUrl = presenter?.imageUrl(for: indexPath.row) {
-            cell.logoOfLeague.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
+            cell.PlayerImg.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
         }else{
-            cell.logoOfLeague.image = UIImage(named: "placeholder")
+            cell.PlayerImg.image = UIImage(named: "placeholder")
         }
         
 

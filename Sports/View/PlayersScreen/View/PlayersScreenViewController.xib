@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayersScreenViewController" customModule="Sports" customModuleProvider="target">
             <connections>
                 <outlet property="PlayersTable" destination="FuI-sf-Fcq" id="bHk-Vp-GdU"/>
+                <outlet property="teamLogo" destination="otP-VC-Hjo" id="RZg-Aa-g2l"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,17 +21,24 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FuI-sf-Fcq">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="0.0" y="302.66666666666674" width="393" height="563"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="otP-VC-Hjo">
+                    <rect key="frame" x="16" y="58.999999999999986" width="361" height="227.66666666666663"/>
+                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FuI-sf-Fcq" secondAttribute="bottom" id="Cx8-eg-fl2"/>
-                <constraint firstItem="FuI-sf-Fcq" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="KAu-JX-DOq"/>
-                <constraint firstItem="FuI-sf-Fcq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="TPb-uS-DAo"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FuI-sf-Fcq" secondAttribute="trailing" id="Z6x-6u-3xJ"/>
+                <constraint firstItem="otP-VC-Hjo" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ZaY-gq-WsZ"/>
+                <constraint firstItem="FuI-sf-Fcq" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" id="aXz-Wq-fxc"/>
+                <constraint firstItem="otP-VC-Hjo" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="apn-n2-cvL"/>
+                <constraint firstItem="FuI-sf-Fcq" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="bZs-pB-mYt"/>
+                <constraint firstItem="FuI-sf-Fcq" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.741765" id="bdB-uw-F00"/>
+                <constraint firstItem="otP-VC-Hjo" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.3" id="bjr-Sb-MiF"/>
+                <constraint firstItem="otP-VC-Hjo" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" multiplier="0.918575" id="e9d-TJ-4wc"/>
+                <constraint firstItem="FuI-sf-Fcq" firstAttribute="top" secondItem="otP-VC-Hjo" secondAttribute="bottom" constant="16" id="ePS-sL-tE7"/>
             </constraints>
             <point key="canvasLocation" x="180.91603053435114" y="-40.140845070422536"/>
         </view>
