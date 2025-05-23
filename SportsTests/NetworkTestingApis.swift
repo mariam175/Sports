@@ -13,28 +13,11 @@ final class NetworkTestingApis: XCTestCase {
     override func setUpWithError() throws {
 
         service = ApiService(isOffline: false)
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        service = nil
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 
 
     func testFootball_ReturnsData() {
@@ -46,7 +29,7 @@ final class NetworkTestingApis: XCTestCase {
            Network.fetchData(sport: sport, quray: query) { (response: LeaguesResponse?, error) in
                XCTAssertNil(error, "error \(error?.localizedDescription ?? "")")
                         XCTAssertNotNil(response, "Empty")
-                        print("Response success: \(response)")
+               //print("Response success: \(String(describing: response)//)")
                         expectation.fulfill()
 
            }
@@ -71,7 +54,50 @@ final class NetworkTestingApis: XCTestCase {
 
            waitForExpectations(timeout: 10)
        }
+    
+    func testFixtures(){
+        let expectation = expectation(description: "wait for Loading")
+        Network.fetchData(sport: "football", quray: "met=Fixtures&leagueId=177&from=2025-05-22&to=2025-05-30"){
+            (response:EventRespose?, error) in
+            if let error = error {
+                XCTFail("Request failed: \(error.localizedDescription)")
+            }
+            else{
+                XCTAssertEqual(response?.success, 1)
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 10)
     }
+    
+    
+    func testAllteams(){
+        let expectation = expectation(description: "wait for Loading")
+        Network.fetchData(sport: "football", quray: "met=Standings&leagueId=177"){
+            (response:LeagueTeamsResponse?, error) in
+            if let error = error {
+                XCTFail("Request failed: \(error.localizedDescription)")
+            }
+            else{
+                XCTAssertEqual(response?.success, 1)
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 10)
+    }
+    
+    
+    func testWrongApi(){
+        let expectation = expectation(description: "wait for Loading")
+        Network.fetchData(sport: "football", quray: "met=Team&teamId=84"){
+            (response:TeamResponse?, error) in
+                XCTAssertNil(response)
+                expectation.fulfill()
+            
+        }
+        waitForExpectations(timeout: 10)
+    }
+}
 
 
 

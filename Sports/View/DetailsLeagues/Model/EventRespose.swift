@@ -8,5 +8,6 @@
 import Foundation
 
 struct EventRespose : Codable{
+    var success : Int
     var result :[Event]
 }
