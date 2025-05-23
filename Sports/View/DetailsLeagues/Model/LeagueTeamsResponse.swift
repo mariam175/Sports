@@ -8,6 +8,7 @@
 import Foundation
 
 struct LeagueTeamsResponse : Codable{
+    var success : Int
     var result: LeaguesTeamsResult
 }
 
