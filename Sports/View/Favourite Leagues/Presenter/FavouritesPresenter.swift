@@ -15,13 +15,15 @@ protocol NetworkStatusDelegate: AnyObject {
 class FavouritesPresenter{
     let favDB = FavouritesDB.shared
    weak var favVC :FavTableViewController?
-    private var reachability: Reachability?
     weak var delegate: NetworkStatusDelegate?
-
     var favouriteLeagues : [FavouriteLeagues] = []
-    init(favVC: FavTableViewController) {
+    var reachabilityService: NetworkObserver?
+
+
+    init(favVC: FavTableViewController, delegate: NetworkStatusDelegate?, reachabilityService: NetworkObserver) {
         self.favVC = favVC
-        setupReachability()
+        self.delegate = delegate
+        self.reachabilityService = reachabilityService
     }
 
     func getFavLeagues(){
@@ -34,37 +36,13 @@ class FavouritesPresenter{
         favDB.deleteFromFav(leagueKey: leagueKey)
     }
 
-    private func setupReachability() {
-            do {
-                reachability = try Reachability()
-                NotificationCenter.default.addObserver(
-                    self,
-                    selector: #selector(reachabilityChanged),
-                    name: .reachabilityChanged,
-                    object: reachability
-                )
-                try reachability?.startNotifier()
-            } catch {
-                print("Unable to start notifier")
-            }
-        }
 
-    @objc private func reachabilityChanged(note: Notification) {
-            guard let reachability = note.object as? Reachability else { return }
 
-            let isConnected = (reachability.connection != .unavailable && reachability.connection != .none)
-            delegate?.networkStatusChanged(isConnected: isConnected)
-        }
 
-    func isConnectedToInternet() -> Bool {
-        return reachability?.connection != .unavailable && reachability?.connection != .none
+    var isConnected: Bool {
+        return reachabilityService?.isConnectedToInternet() ?? false
     }
 
-        deinit {
-            reachability?.stopNotifier()
-            NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachability)
-        }
 
-  
-    
+
 }
