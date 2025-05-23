@@ -12,14 +12,14 @@ class FavTableViewController: UITableViewController, NetworkStatusDelegate {
     var presenter : FavouritesPresenter?
     var sport : String?
     var wantToDelete:Bool?
+    var networkObserver: NetworkObserver?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let favCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         tableView.register(favCell, forCellReuseIdentifier: "favCell")
-
-        presenter = FavouritesPresenter(favVC: self)
-        presenter?.delegate = self
+        networkObserver = NetworkObserver(delegate: self)
+        presenter = FavouritesPresenter(favVC: self, delegate: self, reachabilityService: networkObserver!)
         self.title = "Favourite Leagues"
 
 
@@ -83,7 +83,7 @@ class FavTableViewController: UITableViewController, NetworkStatusDelegate {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if presenter?.isConnectedToInternet() == true {
+        if presenter?.isConnected == true {
             let eventsVC = EventsViewController(nibName: "EventsViewController", bundle: nil)
             eventsVC.sport = sport
 
@@ -114,14 +114,10 @@ class FavTableViewController: UITableViewController, NetworkStatusDelegate {
 
     // make alart
     func showNoInternetAlert() {
-        let alert = UIAlertController(title: "wrong", message: "no internet", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Error", message: "Make sure the internet is connected", preferredStyle: .alert)
 
         //        alert.addAction(UIAlertAction(title: "ok", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "try again", style: .default, handler: { _ in
-
-
-            self.retryNetworkRequest()
-        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .default,  handler: nil))
 
 
         self.present(alert, animated: true, completion: nil)

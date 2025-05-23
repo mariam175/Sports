@@ -35,52 +35,94 @@ final class NetworkTestingApis: XCTestCase {
         }
     }
 
+
+
     func testFootball_ReturnsData() {
+           let expectation = self.expectation(description: "Loading Teams Data")
 
+           let sport = "football"
+           let query = "met=Leagues"
 
+           Network.fetchData(sport: sport, quray: query) { (response: LeaguesResponse?, error) in
+               XCTAssertNil(error, "error \(error?.localizedDescription ?? "")")
+                        XCTAssertNotNil(response, "Empty")
+                        print("Response success: \(response)")
+                        expectation.fulfill()
 
-          let expectation = self.expectation(description: "Loading Data")
+           }
 
+           waitForExpectations(timeout: 10)
+       }
 
-          let url = "https://apiv2.allsportsapi.com/football/?met=Leagues&APIkey=\(Config.apiKey)"
-
-
-
-        service?.loadDataFromFootballApi(url: url) { result, error in
-            XCTAssertNil(error, "error \(error?.localizedDescription ?? "")")
-            XCTAssertNotNil(result, "Empty")
-            print("Response success: \(result)")
-            expectation.fulfill()
-        }
-
-
-          waitForExpectations(timeout: 10)
-
-      }
 
     func testTeams_ReturnsData() {
+           let expectation = self.expectation(description: "Loading Teams Data")
 
+           let sport = "football"
+           let query = "met=Teams&teamId=96"
 
+           Network.fetchData(sport: sport, quray: query) { (response: TeamResponse?, error) in
+               XCTAssertNil(error, "error \(error?.localizedDescription ?? "")")
+                        XCTAssertNotNil(response, "Empty")
+                        print("Response success: \(response)")
 
-          let expectation = self.expectation(description: "Loading Data")
+               expectation.fulfill()
+           }
 
-
-          let url = "https://apiv2.allsportsapi.com/football/?&met=Teams&teamId=96&APIkey=\(Config.apiKey)"
-
-
-
-        service?.loadDataFromTeamsApi(url: url) { result, error in
-            XCTAssertNil(error, "error \(error?.localizedDescription ?? "")")
-            XCTAssertNotNil(result, "Empty")
-            print("Response success: \(result)")
-            expectation.fulfill()
-        }
-
-
-          waitForExpectations(timeout: 10)
-
-      }
+           waitForExpectations(timeout: 10)
+       }
     }
+
+
+
+//    func testTeams_ReturnsData() {
+//
+//
+//
+//          let expectation = self.expectation(description: "Loading Teams Data")
+//
+//
+//          let url = "https://apiv2.allsportsapi.com/football/?&met=Teams&teamId=96&APIkey=\(Config.apiKey)"
+//
+//
+//
+//        service?.loadDataFromTeamsApi(url: url) { result, error in
+//            XCTAssertNil(error, "error \(error?.localizedDescription ?? "")")
+//            XCTAssertNotNil(result, "Empty")
+//            print("Response success: \(result)")
+//            expectation.fulfill()
+//        }
+//
+//
+//          waitForExpectations(timeout: 10)
+//
+//      }
+
+
+//    func testFootball_ReturnsData() {
+//
+//
+//
+//          let expectation = self.expectation(description: "Loading Football Data")
+//
+//
+//          let url = "https://apiv2.allsportsapi.com/football/?met=Leagues&APIkey=\(Config.apiKey)"
+//
+//
+//
+//        service?.loadDataFromFootballApi(url: url) { result, error in
+//            XCTAssertNil(error, "error \(error?.localizedDescription ?? "")")
+//            XCTAssertNotNil(result, "Empty")
+//            print("Response success: \(result)")
+//            expectation.fulfill()
+//        }
+//
+//
+//          waitForExpectations(timeout: 10)
+//
+//      }
+
+
 
 
 
