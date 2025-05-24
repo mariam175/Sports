@@ -6,23 +6,20 @@
 //
 
 import UIKit
-import Lottie
 
-class FavTableViewController: UITableViewController, NetworkStatusDelegate {
+class FavTableViewController: UITableViewController {
     var favouriteLeagues : [FavouriteLeagues] = []
     var presenter : FavouritesPresenter?
     var sport : String?
     var wantToDelete:Bool?
-    var networkObserver: NetworkObserver?
-    var animationView:LottieAnimationView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let favCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         tableView.register(favCell, forCellReuseIdentifier: "favCell")
-        networkObserver = NetworkObserver(delegate: self)
-        presenter = FavouritesPresenter(favVC: self, delegate: self, reachabilityService: networkObserver!)
+        presenter = FavouritesPresenter(favVC: self)
         self.title = "Favourite Leagues"
-        tableView.separatorStyle = .none
+
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -33,11 +30,6 @@ class FavTableViewController: UITableViewController, NetworkStatusDelegate {
 
     func getData(){
         favouriteLeagues = presenter?.favouriteLeagues ?? []
-        if favouriteLeagues.isEmpty{
-            NoFavLeagues()
-        }else{
-            removeEmptyAnimation()
-        }
         tableView.reloadData()
 
     }
@@ -89,7 +81,9 @@ class FavTableViewController: UITableViewController, NetworkStatusDelegate {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if presenter?.isConnected == true {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if let presenter = presenter {
+              if presenter.isInternetAvailable() {
             let eventsVC = EventsViewController(nibName: "EventsViewController", bundle: nil)
             eventsVC.sport = sport
 
@@ -104,25 +98,13 @@ class FavTableViewController: UITableViewController, NetworkStatusDelegate {
         }else{
             showNoInternetAlert()
         }
-    }
-
-    func networkStatusChanged(isConnected: Bool) {
-        DispatchQueue.main.async {
-            if isConnected {
-                print("online")
-
-
-            } else {
-                self.showNoInternetAlert()
-            }
         }
     }
 
-    // make alart
+
     func showNoInternetAlert() {
         let alert = UIAlertController(title: "Error", message: "Make sure the internet is connected", preferredStyle: .alert)
 
-        //        alert.addAction(UIAlertAction(title: "ok", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "OK", style: .default,  handler: nil))
 
 
@@ -131,6 +113,9 @@ class FavTableViewController: UITableViewController, NetworkStatusDelegate {
 
     }
 
+
+
+
     func showDeleteAlert(indexPath: IndexPath, leagueKey: Int) {
         let alert = UIAlertController(title: "Delete League", message: "Do you want to delete this league?", preferredStyle: .alert)
 
@@ -138,9 +123,6 @@ class FavTableViewController: UITableViewController, NetworkStatusDelegate {
             self.presenter?.favDB.deleteFromFav(leagueKey: leagueKey)
             self.favouriteLeagues.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .fade)
-            if self.favouriteLeagues.isEmpty{
-                self.NoFavLeagues()
-            }
         }))
 
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
@@ -153,22 +135,7 @@ class FavTableViewController: UITableViewController, NetworkStatusDelegate {
             print("try again")
         }
 
-    func NoFavLeagues(){
-        guard animationView == nil else { return }
-        animationView = .init(name: "emptyAnimation")
-        animationView?.frame = view.bounds
-        animationView?.contentMode = .scaleAspectFit
-        animationView?.loopMode = .loop
-        animationView?.animationSpeed = 1.0
-        view.addSubview(animationView!)
-        animationView?.play()
 
-    }
-    func removeEmptyAnimation() {
-        animationView?.stop()
-        animationView?.removeFromSuperview()
-        animationView = nil
-    }
 
 
 
