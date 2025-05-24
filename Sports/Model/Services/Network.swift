@@ -26,6 +26,7 @@ class Network:NetworkProtocol{
 
                  }
              case .failure(let error):
+                 print(response)
                  print("\(error.localizedDescription)")
                  DispatchQueue.main.async {
                      complitionHandler(nil, error)
