@@ -108,7 +108,7 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
            if !allLatestEvents.isEmpty {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath)
                as! EventCollectionViewCell
-            cell.configre(event: allLatestEvents[indexPath.row])
+            cell.configre(event: allLatestEvents[indexPath.row], sport: sport ?? "football")
                return cell
            }else{
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotFoundCell", for: indexPath)
@@ -122,7 +122,7 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         if !upComingEvents.isEmpty{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath)
             as! EventCollectionViewCell
-        cell.configre(event: upComingEvents[indexPath.row])
+        cell.configre(event: upComingEvents[indexPath.row], sport: sport ?? "football")
         cell.finalResult.isHidden = true
             return cell
         }
@@ -252,27 +252,6 @@ class EventsViewController: UIViewController ,UICollectionViewDelegate, UICollec
         }
 
 
-    }
-    func placeholderEvents(cell : EventCollectionViewCell){
-        switch sport{
-        case "football":
-            cell.homeImage.image = UIImage(named: "footballPlaceholder")
-            cell.awayImage.image = UIImage(named: "footballPlaceholder")
-        case "cricket":
-            cell.homeImage.image = UIImage(named: "cricketPlaceholder")
-            cell.awayImage.image = UIImage(named: "cricketPlaceholder")
-        case "basketball":
-            cell.homeImage.image = UIImage(named: "basketballPlaceholder")
-            cell.awayImage.image = UIImage(named: "basketballPlaceholder")
-        default:
-            cell.homeImage.image = UIImage(named: "tennisPlaceholder")
-            cell.awayImage.image = UIImage(named: "tennisPlaceholder")
-        }
-        cell.homeName.text = "No Team"
-        cell.awayName.text = "No Team"
-        cell.finalResult.text = "0 - 0"
-        cell.eventDate.isHidden = true
-        cell.eventTime.isHidden = true
     }
     func placeholderCell(_ collectionView: UICollectionView, _ indexPath: IndexPath) -> UICollectionViewCell {
         let cell = UICollectionViewCell()

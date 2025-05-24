@@ -32,10 +32,10 @@ class EventCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor =  UIColor(red: 229/255, green: 228/255, blue: 226/255, alpha: 1.0)
     }
     
-    func configre(event : Event){
-        self.awayImage.sd_setImage(with: URL(string:event.away_team_logo ?? "placeholder"), placeholderImage: UIImage(named: "placeholder"))
+    func configre(event : Event, sport : String){
+        self.awayImage.sd_setImage(with: URL(string:event.away_team_logo ?? "placeholder"), placeholderImage: UIImage(named: Placeholder.placeholderImage(sport: sport)))
         self.awayName.text = event.event_away_team
-        self.homeImage.sd_setImage(with: URL(string: event.home_team_logo ?? "placeholder"), placeholderImage: UIImage(named: "placeholder"))
+        self.homeImage.sd_setImage(with: URL(string: event.home_team_logo ?? "placeholder"), placeholderImage: UIImage(named: Placeholder.placeholderImage(sport: sport)))
         self.homeName.text = event.event_home_team
         self.eventTime.text = event.event_time
         self.eventDate.text = event.event_date

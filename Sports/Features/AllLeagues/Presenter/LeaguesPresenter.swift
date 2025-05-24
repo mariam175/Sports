@@ -26,6 +26,7 @@ class LeaugesPresenter{
 
             DispatchQueue.main.async {
                 self?.LVC.leagues = self?.leagues ?? []
+                self?.LVC.activityIndicator.stopAnimating()
               self?.LVC.leaguesTable.reloadData()
             }
         }

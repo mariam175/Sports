@@ -12,7 +12,7 @@ class LeaguesViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     var presenter : LeaugesPresenter?
     var leagues : [Leagues]?
-
+    var activityIndicator: UIActivityIndicatorView!
     var sport : String?
     @IBOutlet weak var leaguesTable: UITableView!
     override func viewDidLoad() {
@@ -28,6 +28,12 @@ class LeaguesViewController: UIViewController, UITableViewDelegate, UITableViewD
         presenter = LeaugesPresenter(LVC: self)
         presenter?.sport = self.sport ?? ""
         presenter?.getData()
+        
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
 
     }
 
